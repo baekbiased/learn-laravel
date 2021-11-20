@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-
+//fhgfhgfhgfhg
         $request_min_price = $request->start_price;
         $request_max_price = $request->end_price;
 
