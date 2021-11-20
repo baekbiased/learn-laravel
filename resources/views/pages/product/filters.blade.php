@@ -13,8 +13,8 @@
                                 <label class="form-label" for="start_price"> Start Price </label>
                                 <select name="start_price" id="start_price" class="form-control form-select custom-select select2" data-toggle="select2">
                                     <option value="0" > Select </option>
-                                    @foreach($values as $value)
-                                        <option value={{$value}}> ${{$value}} </option>
+                                    @foreach($prices as $price)
+                                        <option value={{$price}}> ${{$price}} </option>
                                     @endforeach()
                                 </select>
                             </div>
@@ -26,8 +26,8 @@
                                 <label class="form-label" for="end_price"> End Price </label>
                                 <select disabled name="end_price" id="end_price" class="form-control form-select custom-select select2" data-toggle="select2">
                                     <option value="0" > Select </option>
-                                    @foreach($values as $value)
-                                        <option value={{$value}}> ${{$value}} </option>
+                                    @foreach($prices as $price)
+                                        <option value={{$price}}> ${{$price}} </option>
                                     @endforeach()
                                 </select>
                             </div>

@@ -17,17 +17,14 @@ class Product extends Model
 
     public function scopeFilters($query, $request) {
 
-//        if (isset($request->end_price)) {
-//            $query::where('price', '>=', $request->start_price);
-//            $query->appends(['start_price' => $request->start_price], ['end_price' => '0']);
-//        }
-//        if (isset($request->start_price) && isset($request->end_price)) {
-//            $query::where('price', '>=', $request->start_price)
-//                ->where('price', '<=', $request->end_price);
-//            $query->appends(['start_price' => $request->start_price]);
-//            $query->appends(['end_price' => $request->end_price]);
-//        }
-//        $query->orderBy('price', 'ASC');
+        if(isset($request['start_price']) && $request['start_price'] !=0){
+            $query->where('price', '>=', $request['start_price'] );
+        }
+        if(isset($request['end_price']) && $request['end_price'] !=0){
+            $query->where('price', '<=', $request['end_price'] );
+        }
+
+        $query->orderBy('price');
     }
 }
 
