@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +27,11 @@ class ProductController extends Controller
         }
         array_push($prices,$x);
 
-        $products = Product::filters($request->all())->paginate(10)->withQueryString();
+//    $products = Product::filters($request->all())->paginate(10);
+
+
+        $products = Product::all();
+
 
         return view('pages.product.index', compact('products', 'prices'));
     }
@@ -40,7 +45,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->all());
+//        dd($request->image);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'image' => 'required',
@@ -51,14 +56,22 @@ class ProductController extends Controller
             return back()->withErrors($validator)->withInput($request->all());
         }
 
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('assets\images\uploads');
+            $image->move($destinationPath, $name);
+
+        }
+
 
         Product::create([
             'name' => $request->name,
             'price' => $request->price,
-            'image' => $request->image,
+            'image' => $name,
         ]);
         Session::flash('success', 'Successfully Added');
-        return redirect()->route('pages.product.show');
+        return redirect()->route('product.index');
 
     }
 

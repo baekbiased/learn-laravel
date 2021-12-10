@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Product extends Model
 {
@@ -14,6 +15,8 @@ class Product extends Model
         'price',
         'image'
     ];
+
+
 
     public function scopeFilters($query, $request) {
 
@@ -26,5 +29,13 @@ class Product extends Model
 
         $query->orderBy('price');
     }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->diffForHumans();
+    }
+
 }
+
+
 

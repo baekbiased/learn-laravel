@@ -37,7 +37,7 @@
                     @if(session('error'))
                         <x-alert type="danger">{{ session('error') }}</x-alert>
                     @endif
-                    <form method="post" action="{{route('product.store')}}">
+                    <form method="post" action="{{route('product.store')}}" enctype="multipart/form-data">
                         @csrf
 
                     <div class="row">
@@ -69,7 +69,10 @@
 
                                     <div class="mb-3">
                                         <label class="form-label w-100">Product Image</label>
-                                        <input class="@error('image') is-invalid @enderror" type="file" name="image">
+{{--                                        <input class="@error('image') is-invalid @enderror" type="file" name="image" >--}}
+                                        <div id="app">
+                                            <image-preview />
+                                        </div>
                                         @error('image')
                                         <div class="invalid-feedback">
                                             {{ $message }}

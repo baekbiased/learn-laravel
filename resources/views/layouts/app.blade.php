@@ -37,6 +37,7 @@
 
 
 <script src="{{ asset('/assets/js/app.js') }}"></script>
+<script src="{{ mix('/js/app.js') }}"></script>
 
 <script>
     $(".select2").each(function () {

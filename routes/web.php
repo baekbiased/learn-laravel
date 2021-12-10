@@ -34,7 +34,7 @@ Route::group(
 //route modal binding
 Route::get('aaa/{user:email}', [ProductController::class, 'index']);
 
-
+//Route::get('/product/index', [ProductController::class, 'index'])->name('products');
 //Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
 //Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
 //Route::post('/product/destroy/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
