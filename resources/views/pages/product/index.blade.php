@@ -9,23 +9,21 @@
             $("#end_price").removeAttr("disabled");
         });
 
-        function get_query_params() {
+        {{--function get_query_params() {--}}
 
-            var start_price = $('#start_price').val();
-            var end_price = $('#end_price').val();
+        {{--    var start_price = $('#start_price').val();--}}
+        {{--    var end_price = $('#end_price').val();--}}
 
-            var queryString = 'start_price=' + start_price + '&end_price=' + end_price;
-            var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + queryString;
-            window.history.pushState({path: newurl}, '', newurl);
+        {{--    var queryString = 'start_price=' + start_price + '&end_price=' + end_price;--}}
+        {{--    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + queryString;--}}
+        {{--    window.history.pushState({path: newurl}, '', newurl);--}}
 
-            var urlParams = new URLSearchParams(window.location.search);
-            var query = urlParams.toString();
-            let url = "{{ route('product.index', ':id') }}";
-            url = url.replace(':id', query);
-            document.location.href = url;
-        }
-
-
+        {{--    var urlParams = new URLSearchParams(window.location.search);--}}
+        {{--    var query = urlParams.toString();--}}
+        {{--    let url = "{{ route('product.index', ':id') }}";--}}
+        {{--    url = url.replace(':id', query);--}}
+        {{--    document.location.href = url;--}}
+        {{--}--}}
 
     </script>
 
@@ -39,8 +37,6 @@
 @endsection
 
 @section('content')
-    @include('pages.product.filters')
-
     @if(session('success'))
         <x-alert type="success">{{ session('success') }}</x-alert>
     @endif
@@ -48,8 +44,14 @@
     @if(session('error'))
         <x-alert type="danger">{{ session('error') }}</x-alert>
     @endif
+
+
+{{--    @include('pages.product.filters')--}}
+
+
     <div id="app">
-        <product-table products="{{$products}}" > </product-table>
+        <filters prices={{$prices}}></filters>
+        <product-table> </product-table>
     </div>
 
 @endsection

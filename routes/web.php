@@ -25,8 +25,9 @@ Route::group(
     ['middleware' => 'auth'],
     function (){
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/product/getProducts', [ProductController::class, 'getProducts'])->name('products.getProducts');
         Route::resource('product', ProductController::class);
-
     }
 );
 

@@ -35,6 +35,11 @@ class Product extends Model
         return Carbon::parse($value)->diffForHumans();
     }
 
+    public function getImageAttribute($value)
+    {
+        return asset("assets/images/uploads") . "/" . $value;
+    }
+
 }
 
 

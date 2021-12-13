@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -14,27 +13,14 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-
-        $min_price = Product::min('price');
-        $max_price = Product::max('price');
-
-        $min_module = $min_price % 10;
-        $min_module = $min_price - $min_module;
-
-        $prices = [];
-        for ($x = $min_module; $x <= $max_price; $x+=10) {
-            array_push($prices,$x);
-        }
-        array_push($prices,$x);
-
-//    $products = Product::filters($request->all())->paginate(10);
-
-
-        $products = Product::all();
-
-
-        return view('pages.product.index', compact('products', 'prices'));
+        $prices = $this->getPrices();
+        return view('pages.product.index', get_defined_vars());
     }
+
+    public function getProducts(Request $request) {
+        return Product::filters($request->all())->get();
+    }
+
 
     public function create()
     {
@@ -116,9 +102,27 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-//        dd($product);
-        $product->delete();
-        Session::flash('success', 'Successfully Deleted');
-        return redirect()->route('product.index');
+
+        return $product->delete();
+
+    }
+
+    /**
+     * @return array
+     */
+    public function getPrices()
+    {
+        $min_price = Product::min('price');
+        $max_price = Product::max('price');
+
+        $min_module = $min_price % 10;
+        $min_module = $min_price - $min_module;
+
+        $prices = [];
+        for ($x = $min_module; $x <= $max_price; $x += 10) {
+            array_push($prices, $x);
+        }
+        array_push($prices, $x);
+        return json_encode($prices);
     }
 }

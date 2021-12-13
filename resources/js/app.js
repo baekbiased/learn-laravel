@@ -22,9 +22,16 @@ window.Vue = require('vue').default;
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('image-preview', require('./components/ImagePreview.vue').default);
 Vue.component('product-table', require('./components/ProductsTable.vue').default);
+Vue.component('filters', require('./components/Filters.vue').default);
 
 
+import Vuex from 'vuex';
+import VueEasyLightbox from 'vue-easy-lightbox'
 
+import storeData from "./store/index"
+
+Vue.use(VueEasyLightbox)
+Vue.use(Vuex)
 
 
 
@@ -35,8 +42,13 @@ Vue.component('product-table', require('./components/ProductsTable.vue').default
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const store = new Vuex.Store(
+    storeData
+)
+
 const app = new Vue({
     el: '#app',
+    store
 });
 
 

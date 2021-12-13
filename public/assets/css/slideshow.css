@@ -12,6 +12,14 @@
     display: none;
 }
 
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:75%;
+    height: 450px;
+}
+
 /* Next & previous buttons */
 .prev, .next {
     cursor: pointer;

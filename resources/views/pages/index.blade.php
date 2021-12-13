@@ -16,27 +16,27 @@
     <div class="slideshow-container">
 
         <!-- Full-width images with number and caption text -->
-        <div class="mySlides">
+        <div class="mySlides container">
             <div class="numbertext">1 / 4</div>
-            <img src="assets/images/img4.jpg" style="max-width:100%; max-height: 500px">
+            <img class="center" src="assets/images/img4.jpg" >
             <div class="text">Caption Text</div>
         </div>
 
-        <div class="mySlides">
+        <div class="mySlides container">
             <div class="numbertext">2 / 4</div>
-            <img src="assets/images/img2.jpg" style="max-width:100%; max-height: 500px">
+            <img class="center" src="assets/images/img2.jpg" >
             <div class="text">Caption Two</div>
         </div>
 
-        <div class="mySlides">
+        <div class="mySlides container">
             <div class="numbertext">3 / 4</div>
-            <img src="assets/images/img3.jpg" style="max-width:100%; max-height: 500px">
+            <img class="center" src="assets/images/img3.jpg" >
             <div class="text">Caption Three</div>
         </div>
 
-        <div class="mySlides">
+        <div class="mySlides container">
             <div class="numbertext">4 / 4</div>
-            <img src="assets/images/img1.jpg" style="max-width:100%; max-height: 500px">
+            <img class="center" src="assets/images/img1.jpg">
             <div class="text">Caption Three</div>
         </div>
 
