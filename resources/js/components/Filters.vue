@@ -10,7 +10,7 @@
                             <div class="col-sm">
                                 <div class="form-group">
                                     <label class="form-label" > Start Price </label>
-                                    <select @change="onChangeMin($event)" class="form-control form-select custom-select" >
+                                    <select id="start_price" @change="onChangeMin($event)" v-model="selectedStatus_min" class="form-control form-select custom-select" >
                                         <option value="0">Select</option>
                                         <option v-for="price in this.prices" v-bind:value="price">{{price}}</option>
                                     </select>
@@ -21,7 +21,7 @@
                             <div class="col-sm">
                                 <div class="form-group">
                                     <label class="form-label" > End Price </label>
-                                    <select @change="onChangeMax($event)" class="form-control form-select custom-select ">
+                                    <select id="end_price" @change="onChangeMax($event)" v-model="selectedStatus_max" class="form-control form-select custom-select ">
                                         <option value="0">Select</option>
                                         <option v-for="price in this.prices" :value="price">{{price}}</option>
                                     </select>
@@ -38,6 +38,7 @@
                                         @click="getProducts"> Apply </button>
 
                                 <button type="button"
+                                        @click="clearStatus"
                                         class="btn btn-sm btn-secondary clear-dt-filters mt-2"> Clear </button>
                             </div>
                         </div>
@@ -55,6 +56,9 @@ export default {
 
     data: function () {
         return {
+            products : [],
+            selectedStatus_min : "0",
+            selectedStatus_max : "0"
         }
     },
 
@@ -72,6 +76,10 @@ export default {
             let max = event.target.value;
             this.$store.commit("changeMaxValue", max);
 
+        },
+        clearStatus:function () {
+            this.selectedStatus_min = 0;
+            this.selectedStatus_max = 0;
         },
         getProducts:function() {
             // console.log(this.$store.state.prices.min);
@@ -92,7 +100,7 @@ export default {
                 .then((response) => {
                     console.log(response.data);
                     this.$store.commit("setProducts", response.data);
-                    //this.products = response.data; //this.$store.getters.getProducts;
+                    this.products = this.$store.getters.getProducts;
                 });
         }
 

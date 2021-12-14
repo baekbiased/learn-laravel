@@ -6,6 +6,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">Products</h5>
+
                     </div>
                     <div class="card-body">
                         <div id="datatables-reponsive_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
@@ -24,11 +25,11 @@
                                         </thead>
                                         <tbody>
                                         <tr v-for="(product, index) in this.$store.getters.getProducts">
-                                            <td> {{ product.id }} </td>
+                                            <td> {{ index+1 }} </td>
                                             <td> {{ product.name }} </td>
                                             <td> ${{ product.price }} </td>
                                             <td>
-                                              <img @click="showSingle(product.image, index)" style="max-width: 25%" :src="product.image">
+                                              <img @click="showSingle(product.image, index)" style="width: 25%" :src="product.image">
 
                                             </td>
                                             <td> {{ product.created_at }} </td>
@@ -39,36 +40,8 @@
                                                 <button class="btn text-danger" @click="deleteProduct(product.id, index)" >
                                                     <i class="fa fa-trash"></i>
                                                 </button>
-
                                             </td>
-
                                         </tr>
-<!--                                        @foreach($products as $product)-->
-<!--                                        <tr>-->
-<!--                                            <td>{{$product->id}}</td>-->
-<!--                                            <td>{{$product->name}}</td>-->
-<!--                                            <td>${{$product->price}}</td>-->
-<!--                                            <td>-->
-<!--                                                <img style="max-width: 15%" src="{{ asset('/assets/images/uploads') . "/" . $product->image }}" >-->
-
-<!--                                            </td>-->
-<!--                                            <td>{{$product->created_at->diffForHumans()}}</td>-->
-<!--                                            <td class="table-action">-->
-<!--                                                <a href="{{ route('product.edit', $product->id)  }}" class="btn" style="display: inline">-->
-<!--                                                    <i class="fa fa-edit text-info"></i>-->
-<!--                                                </a>-->
-<!--                                                <form method="post" action="{{ route('product.destroy', $product->id) }}" onsubmit="return confirmSubmission(this, 'Are you sure you want to delete this message ')" style="display: inline">-->
-<!--                                                    @csrf-->
-<!--                                                    @method('DELETE')-->
-<!--                                                    <button class="btn text-danger" href="{{ route('product.destroy', $product->id) }}">-->
-<!--                                                        <i class="fa fa-trash"></i>-->
-<!--                                                    </button>-->
-<!--                                                </form>-->
-<!--                                            </td>-->
-
-<!--                                        </tr>-->
-<!--                                        @endforeach-->
-
 
                                         </tbody>
                                     </table>
@@ -110,7 +83,6 @@ export default {
 
     methods: {
         deleteProduct: function(id, index){
-
             axios.post('/product/'+id,{_method: 'delete'})
 
                 .then((response) => {
@@ -149,8 +121,22 @@ export default {
             axios.get("/product/getProducts")
                 .then((response) => {
                     this.$store.commit("setProducts", response.data);
+                });
+        },
+        exportToCSV() {
+            let params = "";
+            if(this.$store.state.prices.min > 0){
+                params = "?start_price=" + this.$store.state.prices.min;
+            }
+            if(this.$store.state.prices.max > 0){
+                params = params + "&end_price=" + this.$store.state.prices.max;
+            }
 
-                   // this.products = this.$store.getters.getProducts;
+            //http://127.0.0.1:8000/product?start_price=10&end_price=100
+            let url = "/product/exportToCSV" + params;
+            axios.get(url)
+                .then((response) => {
+                    console.log(response.data);
                 });
         }
     },

@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class ProductController extends Controller
 {
@@ -25,13 +26,11 @@ class ProductController extends Controller
     public function create()
     {
         return view('pages.product.add');
-
     }
 
 
     public function store(Request $request)
     {
-//        dd($request->image);
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'image' => 'required',
@@ -102,9 +101,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-
         return $product->delete();
-
     }
 
     /**
@@ -124,5 +121,32 @@ class ProductController extends Controller
         }
         array_push($prices, $x);
         return json_encode($prices);
+    }
+
+    public function exportToCSV(Request $request) {
+        $products = Product::filters($request->all())->get()->toArray();
+        return (new FastExcel($products))->download('products.csv');
+//        $headers = [
+//            'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
+//            ,   'Content-type'        => 'text/csv'
+//            ,   'Content-Disposition' => 'attachment; filename=products.csv'
+//            ,   'Expires'             => '0'
+//            ,   'Pragma'              => 'public'
+//        ];
+//
+//
+//        # add headers for each column in the CSV download
+//        array_unshift($products, array_keys($products[0]));
+//
+//        $callback = function() use ($products)
+//        {
+//            $FH = fopen('products.csv', 'w');
+//            foreach ($products as $row) {
+//                fputcsv($FH, $row);
+//            }
+//            fclose($FH);
+//        };
+//
+//        return response()->stream($callback, 200, $headers);
     }
 }

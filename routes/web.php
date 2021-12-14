@@ -27,6 +27,7 @@ Route::group(
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
         Route::get('/product/getProducts', [ProductController::class, 'getProducts'])->name('products.getProducts');
+        Route::get('/product/exportToCSV', [ProductController::class, 'exportToCSV'])->name('products.exportToCSV');
         Route::resource('product', ProductController::class);
     }
 );
